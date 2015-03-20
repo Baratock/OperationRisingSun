@@ -1,0 +1,1 @@
+Dieses Objekt simuliert die Sicht eines Clonks, die nur nach Vorne gerichtet ist.

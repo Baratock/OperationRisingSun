@@ -1,0 +1,2 @@
+DE:Stinger(Luftabwehr-Rakete)
+US:Stinger(anti aircraft missle)

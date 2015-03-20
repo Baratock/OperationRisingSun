@@ -1,0 +1,21 @@
+[DefCore]
+id=FRGR
+Name=Splitter-Granate
+Version=4,9,5
+Category=C4D_Object | C4D_SelectMaterial | C4D_SelectKnowledge | C4D_SelectHomebase
+MaxUserSelect=10
+Height=9
+Width=7
+Offset=-3,-5
+Picture=16,0,64,64
+Vertices=2
+VertexX=0,0
+VertexY=2,-3
+VertexFriction=20,20
+VertexCNAT=0,0
+Value=10
+Mass=1
+Rebuy=1
+Collectible=1
+Rotate=1
+ 

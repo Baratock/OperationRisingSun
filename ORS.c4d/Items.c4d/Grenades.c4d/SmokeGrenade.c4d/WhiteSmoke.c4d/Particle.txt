@@ -1,0 +1,17 @@
+[Particle]
+Name=WhiteSmoke
+Face=0,0,16,16,0,0
+Delay=8
+Repeats=5
+MaxCount=5000
+GravityAcc=1
+WindDrift=10
+VertexCount=1
+VertexY=1
+InitFn=StdInit
+ExecFn=StdExec
+FadeOutLen=5
+FadeOutDelay=4
+AlphaFade=0
+Additive=1
+DrawFn=Std

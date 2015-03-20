@@ -1,0 +1,2 @@
+DE:SPAS-12 Schrotflinte
+US:SPAS-12 Pumpgun

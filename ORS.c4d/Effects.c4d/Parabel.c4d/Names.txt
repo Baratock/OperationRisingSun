@@ -1,0 +1,2 @@
+DE:Flugkurve
+US:Parable

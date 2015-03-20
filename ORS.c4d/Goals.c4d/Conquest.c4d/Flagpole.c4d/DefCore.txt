@@ -1,0 +1,15 @@
+[DefCore]
+id=V_FP
+Name=Flagpole
+Version=4,9,10,2
+Category=C4D_Vehicle
+Height=90
+Width=30
+Offset=-15,-45
+Picture=0,0,30,90
+Vertices=4
+VertexX=-15,15,15,-15
+VertexY=-45,-45,45,45
+VertexFriction=20,20,20,20
+Timer=4
+TimerCall=Timer

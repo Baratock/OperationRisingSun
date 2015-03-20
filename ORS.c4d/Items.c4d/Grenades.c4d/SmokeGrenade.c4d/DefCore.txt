@@ -1,0 +1,19 @@
+[DefCore]
+id=SMGR
+Name=SmokeGrenade
+Version=4,9,10,2
+Category=C4D_Object | C4D_SelectMaterial | C4D_SelectKnowledge | C4D_SelectHomebase
+MaxUserSelect=10
+Width=6
+Height=10
+Offset=-3,-5
+Value=10
+Mass=1
+Vertices=2
+VertexX=-2,2
+VertexY=4,-4
+VertexFriction=100,100
+Rebuy=1
+Collectible=1
+Picture=16,0,64,64
+Rotate=1

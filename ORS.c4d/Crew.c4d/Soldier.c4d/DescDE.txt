@@ -1,0 +1,7 @@
+Der Soldat ist eine gut bewaffnet Standart Militäreinheit.
+
+Er kann eine Primärwaffe, eine Sekundärwaffe und 2 Granaten mit sich führen.
+
+Mit einer Granate in der Hand kann er sich auf Dreifach-Stop hinknieen und beim Werfen zielen.
+
+Über das Kontextmenü können Granaten in den Gürtel gelegt oder wieder herrausgenommen werden.

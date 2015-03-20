@@ -1,0 +1,4 @@
+MsgGoalFulfilled=We have a winner!
+MsgGoalUnfulfilled=You still have to conquer %d flags.
+MsgGoalLost=Alas! You have lost.
+WinMsg=And the winner is: %s

@@ -1,0 +1,17 @@
+[DefCore]
+id=P_GN
+Name=Turret
+Version=4,9,5
+Category=16777218
+Height=16
+Width=20
+Offset=-10,-8
+Vertices=1
+VertexX=4
+VertexY=0
+VertexFriction=20
+VertexCNAT=0
+Rotate=1
+BorderBound=1
+NoStabilize=1
+Collectible=0

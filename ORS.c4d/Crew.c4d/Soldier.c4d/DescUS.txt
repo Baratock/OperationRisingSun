@@ -1,0 +1,7 @@
+The soldier is a well armed military standard-unit.
+
+He can carry a primary weapon, a secondary weapon and 2 grenades with him.
+
+With a grenade in his hand, he can kneel down on triple-stop and aim when throwing.
+
+Grenades can be put on the shortcut menu in the grenade belt or be removed.

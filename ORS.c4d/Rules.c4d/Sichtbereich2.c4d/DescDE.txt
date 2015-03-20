@@ -1,0 +1,1 @@
+Diese Regel sorgt für eine realistischere Sicht. Der Clonk kann nun nicht mehr durch Hindernisse sehen. Am besten sollte dies mit dem statischen Sichtbereich kombiniert werden.

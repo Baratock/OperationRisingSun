@@ -1,0 +1,5 @@
+The basic object for the grenade. One has only to include it and to write func explosion. 
+It offers:
+A throw-wide recruitment, the clonk only thorows further as normal when the grenade is active. 
+A Activatefunktion, before being activated the grenade is totally harmless. 
+A time fuse setting.

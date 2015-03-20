@@ -1,0 +1,1 @@
+Diese Funktion schränkt die Beweglichkeit des Clonkes in Abhängigkeit von dem Gewicht seiner Gegenstände, die er bei sich trägt, ein. Sie ist mit allen Hazardclonks und deren Abwandlungen kompatibel.

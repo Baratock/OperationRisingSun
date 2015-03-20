@@ -1,0 +1,14 @@
+[DefCore]
+id=G_CQ
+Version=4,9,10,2
+Name=Conquest
+Category=C4D_StaticBack|C4D_Goal
+MaxUserSelect=1
+Width=1
+Height=1
+Offset=-1,-1
+Value=100
+Components=G_CQ=1
+Picture=0,0,64,64
+Timer=10
+TimerCall=CheckFlags

@@ -1,0 +1,2 @@
+DE:DSR-1 Scharfschützengewehr 
+US:DSR-1 Sniper

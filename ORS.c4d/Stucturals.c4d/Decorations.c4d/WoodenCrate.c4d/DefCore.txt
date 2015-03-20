@@ -1,0 +1,18 @@
+[DefCore]
+id=WDBX
+Name=Wooden Box
+Version=4,9,10,2
+Category=C4D_Vehicle
+Value=30
+Mass=40
+Components=WOOD=3;
+Width=34
+Height=24
+Offset=-17,-12
+Picture=36,0,64,64
+SolidMask=0,25,33,22,0,1
+Vertices=4
+VertexX=-17,17,17,-17
+VertexY=-12,-12,11,11
+VertexFriction=20,20,20,20
+ 

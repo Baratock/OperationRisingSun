@@ -1,0 +1,9 @@
+[Particle]
+Name=AbluftRauch
+MaxCount=1000
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,64,64,-32,-32
+AlphaFade=4
+WindDrift=0

@@ -1,0 +1,27 @@
+[DefCore]
+id=HELI
+Name=Phoenix AH-64
+Version=4,9,5,4
+Category=C4D_Vehicle|C4D_SelectVehicle|C4D_SelectKnowledge
+MaxUserSelect=10
+ContactCalls=1
+Height=60
+Width=200
+Offset=-100,-36
+Value=400
+Mass=500
+Vertices=11
+VertexX=-95,96,61,-18,-67,-29,89,-45,-44,83,-23
+VertexY=-20,-27,-20,-20,8,19,14,16,2,-33,13
+VertexFriction=20,20,20,20,20,30,30,20,20,20,20
+VertexCNAT=CNAT_Top,CNAT_Right,CNAT_Top,CNAT_Top,CNAT_Left,CNAT_Bottom,CNAT_Bottom,CNAT_Left,CNAT_MultiAttach,CNAT_Top,0
+Float=0
+VehicleControl=2
+BorderBound=7
+Placement=0
+Rotate=30
+ClosedContainer=0
+NoStabilize=1
+
+[Physical]
+Float=800

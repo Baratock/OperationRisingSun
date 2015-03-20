@@ -1,0 +1,5 @@
+[DefCore]
+id=A_SH
+Name=AppShot
+Version=4,9,5
+Category=1

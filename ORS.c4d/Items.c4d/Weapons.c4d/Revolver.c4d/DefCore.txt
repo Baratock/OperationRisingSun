@@ -1,0 +1,17 @@
+[DefCore]
+id=W_RV
+Version=4,9,8,2
+Name=Revolver
+Category=C4D_Object|C4D_SelectMaterial|C4D_SelectKnowledge|C4D_SelectHomebase
+MaxUserSelect=2
+Width=12
+Height=6
+Offset=-6,-4
+Vertices=1
+VertexY=0
+VertexFriction=100
+Value=20
+Mass=5
+Picture=12,0,64,64
+Rebuy=1
+Collectible=1

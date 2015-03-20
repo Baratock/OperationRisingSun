@@ -1,0 +1,10 @@
+[DefCore]
+id=V_FL
+Name=Flag
+Version=4,9,10,2
+Category=C4D_Vehicle
+Width=30
+Height=20
+Offset=-15,-10
+Picture=0,0,30,20
+ColorByOwner=1

@@ -1,0 +1,2 @@
+DE:lasergelenkte Rakete
+US:laserguided Missle

@@ -1,0 +1,2 @@
+DE:M4A1 Sturmgewehr
+US:M4A1 Assault Rifle

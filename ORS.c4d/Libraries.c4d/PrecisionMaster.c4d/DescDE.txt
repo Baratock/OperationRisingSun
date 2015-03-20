@@ -1,0 +1,1 @@
+Diese Funktion verändert die Zielgenauigkeit des Clonks in Abhängikeit von seiner Konzentration. Funktioniert nur bei Waffen, die einen Recoil haben, das in dem neuen Waffenobjekt definiert wird.

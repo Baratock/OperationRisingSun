@@ -1,0 +1,5 @@
+Das Grundobjekt für die Granate. Man muss es nur includen und func Explosion schreiben.
+Es bietet:
+Eine Wurfweiteneinstellung, der Clonk wirft aber nur dann weiter als normal wenn die Granate aktiv ist.
+Eine Aktivierungsfunktion, davor ist die Granate völlig harmlos.
+Eine Zeitzündereinstellung.

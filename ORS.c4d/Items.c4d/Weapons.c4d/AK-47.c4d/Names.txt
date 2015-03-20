@@ -1,0 +1,2 @@
+DE:AK-47 Sturmgewehr
+US:AK-47 Assault Rifle

@@ -1,0 +1,8 @@
+[DefCore]
+id=B_RA
+Version=4,9,8,2
+Name=RightArm
+Category=C4D_StaticBack|C4D_Parallax|C4D_Foreground|C4D_MouseIgnore|C4D_IgnoreFoW
+Width=39
+Height=76
+Offset=-20,-38

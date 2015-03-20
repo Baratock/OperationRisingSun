@@ -1,0 +1,12 @@
+[DefCore]
+id=EMIT
+Name=Sender
+Version=4,9,5
+Category=C4D_Object
+Width=6
+Height=6
+Offset=-3,-3
+Picture=6,0,64,64
+Vertices=1
+VertexCNAT=68
+ 

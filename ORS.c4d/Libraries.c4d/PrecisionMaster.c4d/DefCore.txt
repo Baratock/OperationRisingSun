@@ -1,0 +1,5 @@
+[DefCore]
+id=L_PM
+Name=PrecisionMaster
+Version=4,9,5
+Category=1

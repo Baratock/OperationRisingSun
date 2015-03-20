@@ -1,0 +1,7 @@
+[DefCore]
+id=VWR2
+Version=4,9,8,2
+Name=ViewRange2
+Category=C4D_StaticBack
+Width=1
+Height=1

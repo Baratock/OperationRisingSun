@@ -1,0 +1,2 @@
+DE:M16A2 Sturmgewehr
+US:M16A2 Assault Rifle

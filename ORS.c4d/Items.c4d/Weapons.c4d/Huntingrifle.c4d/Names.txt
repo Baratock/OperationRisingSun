@@ -1,0 +1,2 @@
+DE:Jagdflinte
+US:Huntingrifle

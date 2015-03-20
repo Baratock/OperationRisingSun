@@ -1,0 +1,1 @@
+Der Clonk wird nun wirklich verletzbar sein. Bei steigenden Verletzungen werden die Fähigkeiten des Clonks immer weiter eingeschränkt.

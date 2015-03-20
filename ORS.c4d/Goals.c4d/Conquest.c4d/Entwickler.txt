@@ -1,0 +1,11 @@
+PlaceCnquFlag(int iX,int iY,int iTeam, bool fStart,string szFunc)  giebt die platzierte Flagge zurück
+
+iX X-Position der Flagge
+iY Y-Position der Flagge
+iTeam  Team dem diee Flagge zu beginn gehört
+fStart Wenn true kann die Flagge von iTeam immer eingenommen wer(Wird für die Startflagge benötigt)
+szFunc  Funktionsname der Funktion im Scenarioscript die ausgeführt wenn dei Flagge eingenommen wird( Par(0) ist die Teamnummer des Teams das die Flagge erobert hat)
+
+
+ConnectFlags(object pFlag1, object pFlag2)
+ pFlag1 und 2    die Zwei Flaggen dei miteinander verbunden werden sollen

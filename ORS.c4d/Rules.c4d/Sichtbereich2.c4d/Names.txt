@@ -1,0 +1,2 @@
+DE:Sichtfeld(dynamisch)[statisch bitte aktivieren]
+US:Field of View(dynamic)

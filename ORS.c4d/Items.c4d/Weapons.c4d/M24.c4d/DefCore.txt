@@ -1,0 +1,20 @@
+[DefCore]
+id=W_M2
+Name=M24
+Version=4,9,5,0
+Category=C4D_Object | C4D_SelectMaterial | C4D_SelectKnowledge | C4D_SelectHomebase
+MaxUserSelect=1
+Width=28
+Height=6
+Offset=-14,-3
+Value=80
+Mass=20
+Picture=28,0,64,64
+Rebuy=1
+Collectible=1
+Rotate=0
+Vertices=3
+VertexX=14,-14,14
+VertexY=2,-1,-1
+VertexFriction=100,100,100
+

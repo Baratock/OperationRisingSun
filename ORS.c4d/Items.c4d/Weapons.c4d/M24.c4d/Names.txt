@@ -1,0 +1,2 @@
+DE:M24 Scharfschützengewehr 
+US:M24 Sniper

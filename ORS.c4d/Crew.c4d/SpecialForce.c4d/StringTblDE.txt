@@ -1,0 +1,3 @@
+# Control Descs
+CtrlInventoryDesc=Inventar auswählen
+Crawl=Hinlegen

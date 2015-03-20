@@ -1,0 +1,4 @@
+MsgGoalFulfilled=Und wir haben einen Gewinner!
+MsgGoalUnfulfilled=Dein Team muss noch %d Flaggen erobern.
+MsgGoalLost=Leider verloren.
+WinMsg=%s hat gewonnen!

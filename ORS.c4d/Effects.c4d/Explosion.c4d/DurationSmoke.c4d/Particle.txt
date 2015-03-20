@@ -1,0 +1,14 @@
+[Particle]
+Name=Smoke10
+MaxCount=10000
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+CollisionFn=BounceY
+Face=0,0,64,64,-32,-32
+Delay=0
+Repeats=1
+AlphaFade=1
+GravityAcc=6
+VertexCount=1
+WindDrift=10

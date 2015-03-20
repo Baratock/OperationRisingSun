@@ -1,0 +1,15 @@
+[Particle]
+Name=SignalSmoke
+MaxCount=2000
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,64,64,-32,-32
+Delay=4
+Repeats=6
+GravityAcc=-9
+WindDrift=10
+AlphaFade=3
+Additive=1
+Attach=1
+FadeOutDelay=3

@@ -1,0 +1,2 @@
+DE:Medical Suite
+US:Medical Suite

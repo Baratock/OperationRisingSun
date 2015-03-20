@@ -1,0 +1,11 @@
+[Particle]
+Name=Dot
+MaxCount=2000
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,32,32,-16,-16
+Delay=0
+Repeats=0
+GravityAcc=0
+AlphaFade=3

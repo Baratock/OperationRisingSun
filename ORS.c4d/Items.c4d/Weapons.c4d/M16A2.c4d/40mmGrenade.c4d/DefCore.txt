@@ -1,0 +1,11 @@
+[DefCore]
+id=40MM
+Name=40mmGrenade
+Version=4,9,5
+Category=C4D_Vehicle
+Width=10
+Height=3
+Offset=-5,-1
+Vertices=1
+Rotate=1
+Picture=10,0,64,64
