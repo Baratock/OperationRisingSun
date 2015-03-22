@@ -1,0 +1,1 @@
+A quickmenu for fast menuselections.

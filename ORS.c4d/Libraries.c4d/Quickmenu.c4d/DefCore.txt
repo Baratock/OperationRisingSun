@@ -1,0 +1,10 @@
+[DefCore]
+id=QMEN
+Name=QuickMenu
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Foreground
+Width=160
+Height=160
+Offset=-80,-80
+Picture=0,0,160,160
+ 

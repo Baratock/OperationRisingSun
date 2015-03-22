@@ -33,7 +33,10 @@ public func Departure(object pContainer)
 public func ControlThrow(object pBy)
 {
  if(!used)
-  return false;
+ {
+ 	Active(pBy);
+ 	return true;
+ }
  if(!WildcardMatch(GetAction(pBy),"Walk*"))
   return false;
  var dir = -1+2*GetDir(pBy);
@@ -49,6 +52,17 @@ SetXDir(GetXDir()/3*2);
 
 public func Activate(object pClnk)
 {
+	var menu = CreateQuickMenu(this, pClnk);
+	menu->Add(0, SNB1, 0, "Timer", 1);
+	menu->Add(1, SNB2, 0, "Timer", 2);
+	menu->Add(2, SNB3, 0, "Timer", 3);
+	menu->Add(3, SNB4, 0, "Timer", 4);
+	menu->Add(4, SNB5, 0, "Timer", 5);
+}
+
+/*
+public func Activate(object pClnk)
+{
  if(used)
   return false;
  pThrower = pClnk;
@@ -59,6 +73,7 @@ public func Activate(object pClnk)
  //Benutzer definierter Menüeintrag
  if(HasCustomSettings()) AddMenuItem(CSName(), "CustomSettings(pThrower)",CSSymbol(),pClnk);
 }
+*/
 
 protected func SetTimer(object clonk)
 {
