@@ -83,6 +83,7 @@ public func FMData2(int data)
 	if(data == FM_Recharge)   	return 36;
 	if(data == FM_Damage)     	return 30;
 	if(data == FM_WeaponSound)	return "m203_f";
+	if(data == FM_NoCrosshair)	return true;
 	return Default(data);
 }
 

@@ -20,6 +20,7 @@ static const FM_Recoil					=14;//Gibt den R¸ckstoﬂ beim Abschieﬂen der Waffe an
 static const FM_HeadDamage   		=15;//Schaden in Prozent der bei einem Kopfschuss gemacht wird 
 static const FM_PushingDistance =16;//Gibt an mit welcher Geschwindigkeit der Clonk bei einem Treffer geschleudert wird
 static const FM_WeaponSound			=17;//Der Sound, der beim Schieﬂen abgespielt wird
+static const FM_NoCrosshair			=18;//Falls kein Fadenkreuz angezeigt werden soll
 
 public func Default(int data)    // Standardeinstellungen
 {

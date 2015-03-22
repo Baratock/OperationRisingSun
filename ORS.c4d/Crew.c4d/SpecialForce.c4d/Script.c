@@ -2,8 +2,8 @@
 
 #strict 2
 #include HZCK
-#include L_WM
-#include L_PM
+#include L_WM //Wegthmaster
+#include L_PM //PrecisionMaster
 
 local GrenAimAngle, pGrenCrosshair, GrenStrengh;
 
