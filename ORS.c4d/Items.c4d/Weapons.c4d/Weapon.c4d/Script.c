@@ -4,11 +4,11 @@
 
 //---------------Neue Funktionen, die in den Waffen benutzt werden können--------------------------
 
-public func HasLaser()					{ return false; }//Wird beim Zielen ein Laserstrahl erzeugt?
-public func LaserX()						{ return 0; 		}//Verändert Ursprung des Laserstrahls
-public func LaserY()						{ return 0; 		}//Verändert Ursprung des Laserstrahls
-public func HeadSound()					{ return 0; 		}//Gibt den Ton an der bei einem Kopfschuss abgespielt wird
-public func IsSecondaryWeapon()	{ return false; }
+public func HasLaser()				{ return false; }//Wird beim Zielen ein Laserstrahl erzeugt?
+public func LaserX()				{ return 0; 		}//Verändert Ursprung des Laserstrahls
+public func LaserY()				{ return 0; 		}//Verändert Ursprung des Laserstrahls
+public func HeadSound()				{ return 0; 		}//Gibt den Ton an der bei einem Kopfschuss abgespielt wird
+public func IsSecondaryWeapon()		{ return false; }
 public func ScopeViewRange()		{ return 0; 		}//Gibt den Bereich an, den man sehen kann, wenn man zielt
 public func CantCrouchAim()			{ return false; }//Sagt ob Waffe beim Liegen nicht eingesetzt werden kann
 
@@ -16,11 +16,16 @@ public func CantCrouchAim()			{ return false; }//Sagt ob Waffe beim Liegen nicht
 
 //Diese neuen Daten werden von dem Projektil SHOT benutzt 
 static const FM_Spreading    		=13;//Allgemeine Streuung
-static const FM_Recoil					=14;//Gibt den Rückstoß beim Abschießen der Waffe an
+static const FM_Recoil				=14;//Gibt den Rückstoß beim Abschießen der Waffe an
 static const FM_HeadDamage   		=15;//Schaden in Prozent der bei einem Kopfschuss gemacht wird 
-static const FM_PushingDistance =16;//Gibt an mit welcher Geschwindigkeit der Clonk bei einem Treffer geschleudert wird
+static const FM_PushingDistance 	=16;//Gibt an mit welcher Geschwindigkeit der Clonk bei einem Treffer geschleudert wird
 static const FM_WeaponSound			=17;//Der Sound, der beim Schießen abgespielt wird
 static const FM_NoCrosshair			=18;//Falls kein Fadenkreuz angezeigt werden soll
+static const FM_AmmoSlot			=19;
+
+//------------------------------Neue Locale Variablen---------------------------------------
+local aAmmo;
+local aAmmoType;
 
 public func Default(int data)    // Standardeinstellungen
 {
@@ -38,12 +43,13 @@ public func Default(int data)    // Standardeinstellungen
   if(data == FM_Damage)    				return 0;
   if(data == FM_Spreading)				return 0;
   if(data == FM_HeadDamage)				return 100;
-  if(data == FM_PushingDistance)	return 0;
-  if(data == FM_Recoil)						return 0;
+  if(data == FM_PushingDistance)		return 0;
+  if(data == FM_Recoil)					return 0;
   if(data == FM_WeaponSound)			return 0;
   if(data == BOT_Range)    				return 100;
   if(data == BOT_DmgType)  				return DMG_Projectile;
   if(data == BOT_Ballistic)				return 0;
+  if(data == FM_AmmoSlot)				return 1;
   if(data == BOT_Power)    				return BOT_Power_1;
   if(data == BOT_EMP)      				return false;
 }
@@ -100,6 +106,13 @@ protected func FxLaserPointerStop (object pTarget, int iEffectNumber, int iReaso
 
 
 //---------------------------------Alte überarbeitete Funktionen-----------------------------------
+
+public func Initialize()
+{
+	aAmmo = CreateArray();
+	aAmmoType = CreateArray();
+	_inherited();
+}
 
 public func FxRechargeStop(object pTarget, int iNumber, int iReason, bool fTemp) {
   // Waffenträger weg?
@@ -400,6 +413,217 @@ public func Entrance()
 SetR(0);
 }
 //----------------------------------------Andere Funktionen----------------------------------------
+//Feuermodi
+private func ChangeFireMode(dummy, i)
+{
+  // Immer noch genügend Munition da?
+  if(!CheckAmmo(GetFMData(FM_AmmoID, i),GetFMData(FM_AmmoUsage,i),GetUser(),this()))
+  {
+    // Nein. Mecker.
+    Failure(dummy, i);
+    // Menü will geupdatet werden, wahrscheinlich
+    var item=GetMenuSelection(GetUser());
+    CloseMenu(GetUser());
+    ControlDigDouble(GetUser());
+    SelectMenuItem (item, GetUser());
+    // Fertig.
+    return; 
+  }
+  CloseMenu(GetUser());
+  var old = GetFireMode();
+  // Schussmodus umstellen
+  if(SetFireMode(i))
+  {
+    OnAutoStop(old);
+    // Danach neue Munition einladen.
+    //Reload();  //auch hier nein
+  }
+}
+
+private func SetFireMode(int i) {
+  if(i == 0) return;
+
+  // Gleicher Modus: Nur nachladen wenn nicht mehr voll und lädt nicht nach
+  if(i == firemode) {
+  	Reload();
+    if(CheckAmmo(GetFMData(FM_AmmoID, i),GetFMData(FM_AmmoLoad),this())) return; 
+    if(IsReloading()) return;
+  }
+  // Alte Munition ausladen
+  //Empty(); //Nope behalten
+  
+  // Schussmodus umstellen aber vorher nachladen unterbrechen
+  CancelReload();
+  firemode=i;
+  stopauto=false;
+  ratecount = GetFMData(FM_AmmoRate, i);
+  
+  // Helpmessage
+  if(GetUser())
+    HelpMessage(GetUser()->GetOwner(),"$FireModeChanged$",GetUser(),GetFMData(FM_Name),GetFMData(FM_AmmoID));
+  
+  return 1;
+}
+
+
+
+//Waffe entleeren
+public func Empty()	{ Empty2(GetSlot());	}
+
+public func Empty2(int slot)    // Waffe ausleeren
+{
+	// Laden wir nach? Abbrechen.
+	if(IsReloading()) RemoveEffect("Reload", this);
+	if(IsRecharging()) RemoveEffect("Recharge", this);
+
+	// Munitionsart wo raus muss
+	var ammoid;
+	if(slot)
+		ammoid = GetAmmoType(slot);
+	else
+	{
+		slot = GetSlot();
+		ammoid = GetFMData(FM_AmmoID);
+	}
+	
+	// Zu schiebende Munitionsmenge
+	var ammoamount = GetAmmo(ammoid, this());
+	// Clonk wiedergeben 
+	DoAmmo(ammoid, ammoamount, GetUser());
+	// Hier entfernen
+	DoAmmo2(slot, ammoid, -ammoamount, this());
+}
+
+//Ammo
+
+//---Munitionstyp---
+public func GetCurrentAmmoType()	{	return GetAmmoType(GetSlot());	}
+public func GetAmmoType(int slot)	{	return aAmmoType[slot-1];		}
+
+public func SetAmmoType(int slot, id ammoid)
+{
+	aAmmoType[slot-1] = ammoid; 
+}
+
+//---Munitionsmenge---
+public func SetAmmoCount(int slot, int amount)
+{
+	aAmmo[slot-1] = amount;
+}
+
+public func GetAmmoCount(int slot)	{	return aAmmo[slot-1];	}
+public func GetCurrentAmmoCount()	{	return GetAmmoCount(GetSlot());	}
+
+//---Munitionsslot---
+public func GetSlot(int FM)
+{
+	//Get FM data for slot if no FM given use current one
+	var i = GetFMData(FM_AmmoSlot, FM);
+	if(i < 1)
+		i = 1;
+	return i;
+}
+public func GetSlotCount()			{	return GetLength(aAmmo);		}
+
+
+//---Globals---
+global func DoAmmo(id ammoid, int change, object target)
+{
+	if(!target)	target = this;
+	if(target->~IsWeapon2())
+		return DoAmmo2(target->GetSlot(), ammoid, change, target);
+	else
+		return _inherited(ammoid, change, target);
+}
+
+global func DoAmmo2(int slot, id ammoid, int change, object target)
+{ 
+	// gar keine Munition
+	if(!(ammoid->~IsAmmo())) return false;
+	
+	// Kann 0 sein bei Objektlokalen Aufrufen.
+	if(!target) target=this;
+  
+  	// Entsprechendes Munitionslagerobjekt suchen
+  	var obj = target ->~ AmmoStoring();
+  	if(!obj) obj = target;
+  
+  	// no ammo rule
+  	if(ObjectCount(NOAM))
+    	if(obj ->~ IsAmmoStorage())
+			return false;
+      
+	// Alten Munitionsstand speichern
+	var oldammoamount = obj->GetAmmo(ammoid);
+	var truechange;
+	var maxamount = ammoid->~MaxAmount();
+	// Der neue Wert wird ausgerechnet, darf aber nicht größer als eventuelles MaxAmount() und nicht kleiner als 0 sein
+	if(maxamount == 0)
+		truechange= Max(oldammoamount+change, 0);
+	else
+		truechange= Max(Min(maxamount, oldammoamount+change), 0);
+  
+	var maxammo = target->~GetFMData(FM_AmmoLoad);
+	if(maxammo)
+		truechange = Min(maxammo, truechange);
+  	
+	// Neuer Wert dem Objekt geben, in Lokale ammoamount
+	target->~SetAmmoCount(slot, truechange);
+	target->~SetAmmoType(slot, ammoid);
+  
+	// Wenn Muni alle, Objekt entfernen
+	if(truechange == 0) 
+	  	target->~SetAmmoType(slot, 0);
+	// Differenz zurückgeben: Tatsächliche Änderung.
+	return truechange-oldammoamount;
+}
+
+global func GetAmmo(id ammoid, object target)
+{
+	if(!target)	target = this;
+	if(target->~IsWeapon2())
+		return GetAmmo2(target->GetSlot(), target);
+	else
+		return _inherited(ammoid,  target);
+}
+
+global func GetAmmo2(int slot, object target)
+{	
+	// Kann 0 sein bei Objektlokalen Aufrufen.
+	if(!target) target=this;
+	// Entsprechendes Munitionslagerobjekt suchen
+	var obj = target ->~ AmmoStoring();
+	if(!obj) obj = target;
+	// no ammo rule
+	if(ObjectCount(NOAM))
+		if(obj ->~ IsAmmoStorage())
+			return 0;
+	return target->~GetAmmoCount(slot);
+}
+
+global func CheckAmmo2(int slot, id ammoid, int count, object target) {
+
+ 	if(!ammoid) return false;
+	if(!target->~isWeapon2())	return false;
+	// gar keine Munition
+	if(!(ammoid->~IsAmmo())) return false;
+
+	if(!target) target = this;
+	Log("%v: %v, %v", ammoid, count, target);
+    // no ammo rule
+	var obj = target ->~ AmmoStoring();
+	if(!obj) obj = target;
+	if(ObjectCount(NOAM))
+		if(obj ->~ IsAmmoStorage())
+			return true;
+	if(target->~AmmoType(slot))
+		return false;
+	if(GetAmmo2(slot, target) >= count)
+		return true;
+	return false;
+}
+
+
 
 //gibt beim ligen den dritten,knien den zweiten und sonst den ersten wert aus 
 public func PostureValue(stehend, knieend, liegend)
@@ -417,3 +641,4 @@ if(GetUser())
 
 //waffengrundobjekt darf im waffenmenü nicht auswählbar sein
 public func NoWeaponChoice()	{ return GetID() == ORSW; }
+public func IsWeapon2()			{ return true;	}

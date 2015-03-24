@@ -45,31 +45,32 @@ public func BOTData1(int data)
 
 public func Fire1()
 {
-if(GetUser())
-if(GetUser()->~ReadyToFire())
-{
-var user = GetUser();
-var trail = 80;
-var size = 2; 
-var range = 600;
-var speed = 300;
-var dir = GetDir(user)*2-1;
-var angle = user->AimAngle();
-var x,y; user->WeaponEnd(x,y);
-var ammo = CreateObject (SHOT,x,y,GetController(user));
-ammo-> Launch(angle,speed,range,size,trail,GetFMData(FM_Damage));
-MuzzleFlash(35,user,x,y,angle);
-BulletCasing(dir*6,3,-dir*5,-20,5);
-//Ton pro Kugel abspielen
-Sound(GetFMData(FM_WeaponSound),0,this,100,0,-1);
-ScheduleCall(this,"WeaponSound",2,0);
-//Es werden 3 schüsse abgefeurt: Feuerstoß
-if(GetUser())
+
+	Log("Peng");
+	if(GetUser() && GetUser()->~ReadyToFire())
 	{
-	if (++schuss < 3)return ScheduleCall(0,"Fire1",4);
-	else if(schuss >= 3) schuss = 0;
+		var user = GetUser();
+		var trail = 80;
+		var size = 2; 
+		var range = 600;
+		var speed = 300;
+		var dir = GetDir(user)*2-1;
+		var angle = user->AimAngle();
+		var x,y; user->WeaponEnd(x,y);
+		var ammo = CreateObject (SHOT,x,y,GetController(user));
+		ammo-> Launch(angle,speed,range,size,trail,GetFMData(FM_Damage));
+		MuzzleFlash(35,user,x,y,angle);
+		BulletCasing(dir*6,3,-dir*5,-20,5);
+		//Ton pro Kugel abspielen
+		Sound(GetFMData(FM_WeaponSound),0,this,100,0,-1);
+		ScheduleCall(this,"WeaponSound",2,0);
+		//Es werden 3 schüsse abgefeurt: Feuerstoß
+		if(GetUser())
+		{
+			if (++schuss < 3)return ScheduleCall(0,"Fire1",4);
+			else if(schuss >= 3) schuss = 0;
+		}
 	}
-}
 }
 
 public func FMData2(int data)
@@ -79,6 +80,7 @@ public func FMData2(int data)
 	if(data == FM_Icon)					return 40MM;
 	if(data == FM_AmmoLoad)   	return 1;
 	if(data == FM_AmmoUsage)  	return 1;
+	if(data == FM_AmmoSlot)		return 2;
 	if(data == FM_Reload)     	return 36*10;
 	if(data == FM_Recharge)   	return 36;
 	if(data == FM_Damage)     	return 30;
@@ -130,43 +132,6 @@ public func RauchErzeugen()
   return 1;
 }
 
-public func AddParabel(object pObj, int xOffset, int yOffset, int iAngle, int iSpeed, int iColor)
-{
-  // Alte Parabel entfernen
-  RemoveParabel(pObj);
-  // Neues Hilfsobjekt erzeugen
-  var Parabel = CreateObject(PRBL, GetX(pObj)-GetX(), GetY(pObj)-GetY(), GetOwner(pObj));
-  Parabel->SetAction("Attach", pObj);
-  if(!iColor)iColor=RGB(0,255,0);
-	var iXDir =  Sin(iAngle,iSpeed);
-	var iYDir = -Cos(iAngle,iSpeed);
-  // Startwerte setzen
-  var iXOld, iYOld;
-  var iFaktor = 100;
-  xOffset *= iFaktor; yOffset *= iFaktor;
-  iYDir *= 5; iXDir *= 5;
-  yOffset -= 4*iFaktor;
-  iXOld = xOffset; iYOld = yOffset;
-  
-  // Flugbahn vorberechnen
-  for(var i=0;i<400;i++)
-  {
-    // Geschwindigkeit und Gravitation einberechnen
-    xOffset += iXDir;
-    yOffset += iYDir + GetGravity()*i/20*7/2;//<--Gravitation erhöht, für höhere Projektilgeschwindigkeit
-    if(Distance((iXOld-xOffset)/iFaktor, (iYOld-yOffset)/iFaktor)>=20)
-    {
-      CreateParticle("Punkt", xOffset/iFaktor-GetX(Parabel), yOffset/iFaktor-GetY(Parabel),
-		      iXDir/400, iYDir/400, 10, iColor, Parabel);
-      iXOld = xOffset; iYOld = yOffset;
-    }
-    //Beim erreichen von Material abbrechen
-    if(GBackSolid(xOffset/iFaktor-GetX(), yOffset/iFaktor-GetY())) break;
-  }
-  
-  return Parabel;
-}
-
 public func ControlDig(pClonk)
 {
 	//wenn er mit Granatenwerfer zielt
@@ -207,7 +172,7 @@ user->WeaponEnd(x,y);
 if(GetCharge()==1000)iClr=RGB(0,255,0);
 else iClr=RGB(255,0,0);
 //Parabel anzeigen
-if(GetFireMode()==2 && GetID(Contents(0,GetUser()))==GetID(this))pParabel=AddParabel(user,GetX(user)+x,GetY(user)+y,user->AimAngle(),iSpeed,iClr);
+if(GetFireMode()==2 && GetID(Contents(0,GetUser()))==GetID(this))pParabel=AddParabel(user,GetX(user)+x,GetY(user)+y,user->AimAngle(),iSpeed*6/11,iClr);
 else RemoveParabel(GetUser());
 }
 

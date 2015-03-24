@@ -12,7 +12,6 @@ public func HandSize()  { return 800; }
 public func HandX()     { return 4000; }
 public func HandY()     { return 0; }
 public func IsDrawable() { return true; }
-protected func HasCustomSettings() { return false; }
 
 
 protected func Initialize()
@@ -25,14 +24,14 @@ used = false;
 
 public func Departure(object pContainer)
 {
- if(used)
+ if(IsUsed())
   pThrower = pContainer;
  return true;
 }
 
 public func ControlThrow(object pBy)
 {
- if(!used)
+ if(!IsUsed())
  {
  	Active(pBy);
  	return true;
@@ -52,37 +51,14 @@ SetXDir(GetXDir()/3*2);
 
 public func Activate(object pClnk)
 {
+	if(IsUsed())
+		return 1;
 	var menu = CreateQuickMenu(this, pClnk);
 	menu->Add(0, SNB1, 0, "Timer", 1);
 	menu->Add(1, SNB2, 0, "Timer", 2);
 	menu->Add(2, SNB3, 0, "Timer", 3);
 	menu->Add(3, SNB4, 0, "Timer", 4);
 	menu->Add(4, SNB5, 0, "Timer", 5);
-}
-
-/*
-public func Activate(object pClnk)
-{
- if(used)
-  return false;
- pThrower = pClnk;
- CreateMenu(GetID(), pClnk, this());
- AddMenuItem("Stift ziehen","Active(pThrower)",SFLN,pClnk);
- AddMenuItem("Zeitzünder","SetTimer(pThrower)",LIQG,pClnk);
- //AddMenuItem("Wurfkraft","SetStrengh(pThrower)",MWND,pClnk);
- //Benutzer definierter Menüeintrag
- if(HasCustomSettings()) AddMenuItem(CSName(), "CustomSettings(pThrower)",CSSymbol(),pClnk);
-}
-*/
-
-protected func SetTimer(object clonk)
-{
-CreateMenu(GetID(),clonk, this()); //Menü
-AddMenuItem("Eine Sekunde","Timer(1)",SNB1,clonk);
-AddMenuItem("Zwei Sekunden","Timer(2)",SNB2,clonk);
-AddMenuItem("Drei Sekunden","Timer(3)",SNB3,clonk);
-AddMenuItem("Vier Sekunden","Timer(4)",SNB4,clonk);
-AddMenuItem("Fünf Sekunden","Timer(5)",SNB5,clonk);
 }
 
 protected func Timer(int Time) { iTime=36*Time; }

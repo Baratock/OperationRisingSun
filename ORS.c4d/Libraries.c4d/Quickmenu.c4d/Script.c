@@ -9,6 +9,7 @@ static const QMEN_Right	= 2;
 static const QMEN_Down	= 3;
 static const QMEN_Left	= 4;
 
+static const QMEN_Animation = 5;
 static const QMEN_RingDistance = 45;
 //Locals
 local pTarget;
@@ -104,41 +105,65 @@ public func Create(object CommandObj, object pClonk)
 	
 	SetVisibility(VIS_Owner);
 	//SelctionCheck Effect
-	AddEffect("CheckMenu", this, 1, 5, this);
+	SetAction("Opening");
 }
 
 //What happens whem Item are added, can differ if there are other Menus
 protected func OnAdd(int Index, id IconID, id BackgroundID, string szCommand, Parameter,  string szBGName)
 {
+	
 	var i = 2*Index+1;
 	var j = 2*Index+2;
 	if(IconID)
 		SetGraphics(0, this, IconID, j, GFXOV_MODE_IngamePicture);
 	if(BackgroundID)
 		SetGraphics(0, this, BackgroundID, i, GFXOV_MODE_IngamePicture);
-	//Scaling for Icons
-	var w = GetDefCoreVal("Picture", "DefCore", IconID, 2);
-	var h = GetDefCoreVal("Picture", "DefCore", IconID, 3);
-	var s = Max(h, w);
-	var x = 500*PosX(Index);
-	var y = 500*PosY(Index);
-	SetObjDrawTransform(500*s/160,0,x, 0, 500*s/160,y, this, j);
-	
-	w = GetDefCoreVal("Picture", "DefCore", BackgroundID, 2);
-	h = GetDefCoreVal("Picture", "DefCore", BackgroundID, 3);
-	s = Max(h, w);
-	x = 500*PosX(Index);
-	y = 500*PosY(Index);
-	SetObjDrawTransform(500*s/160,0,x, 0, 500*s/160,y, this, i);
+	if(GetAction() == "Opening")
+		Opening();
+	if(GetAction() == "Closing")
+		Closing();
+		
 }
 
+
+//scaling of the UI in 1/1000
 protected func ScaleMenu(int scale)
 {
+	//UI
+	SetObjDrawTransform(scale, 0, 0, 0, scale, 0, this, 0);
+	
+	//Element 1 -5
+	for(var a = 0; a < 5; a++)
+	{
+		var IconID = aItemIcon[a];
+		var BackgroundID = aItemBackground[a];
+	
+		var sc = scale/2;
+		
+		var i = 2*a+1;
+		var j = 2*a+2;
+		//Scaling for Icons
+		var w = GetDefCoreVal("Picture", "DefCore", IconID, 2);
+		var h = GetDefCoreVal("Picture", "DefCore", IconID, 3);
+		var s = Max(h, w);
+		var x = sc*PosX(a);
+		var y = sc*PosY(a);
+		SetObjDrawTransform(sc*s/160,0,x, 0, sc*s/160,y, this, j);
+	
+		w = GetDefCoreVal("Picture", "DefCore", BackgroundID, 2);
+		h = GetDefCoreVal("Picture", "DefCore", BackgroundID, 3);
+		s = Max(h, w);
+		var x = sc*PosX(a);
+		var y = sc*PosY(a);
+		SetObjDrawTransform(sc*s/160,0,x, 0, sc*s/160,y, this, i);
+	}
 }
 
 //Activate Selected Item
 public func ActivateItem(int Index)
 {
+	if(GetAction() == "Closing")
+		return;
 	//Look if Command  is Valid
 	if(aItemExists[Index] && aItemCommand[Index] && GetType(aItemCommand[Index]) == C4V_String)
 		pCommandObj->Call(aItemCommand[Index], aItemPar[Index]);
@@ -147,24 +172,46 @@ public func ActivateItem(int Index)
 
 
 //EffectTimer for Checking if the Menu is Still in use
-public func FxCheckMenuTimer(object pTarget)
+public func InUse()
 {
-	if(pTarget != GetCursor(GetOwner(pTarget)))
+	if(this != GetCursor(GetOwner(pTarget)))
 	{
-		pTarget->Close();
+		Close();
 		return -1;
 	}
 	return true;
 }
 
+public func Closing()
+{
+	var t = GetActTime();
+	var i = QMEN_Animation -t;
+	var s = i*1000/QMEN_Animation;
+	ScaleMenu(s);
+	//Close after Animation
+	if(t >= QMEN_Animation)
+		RemoveObject();
+}
+
+public func Opening()
+{
+	var t = GetActTime();
+	var s = t*1000/QMEN_Animation;
+	ScaleMenu(s);
+	//Finish after Animation
+	if(t >= QMEN_Animation)
+		SetAction("InUse");
+}
 
 // Close Menu
 public func Close()
 {
+	if(GetAction() == "Closing")
+		return;
 	ClearLastPlrCom();
 	if(pTarget)
 		SetCursor(GetOwner(), pTarget, 1, 1);
-	RemoveObject(this);
+	SetAction("Closing");
 	return;
 }
 
