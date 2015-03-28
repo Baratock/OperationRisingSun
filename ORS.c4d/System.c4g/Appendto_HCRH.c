@@ -6,7 +6,9 @@
 protected func Check() {
 	var user = GetActionTarget();
 	var wepn = Contents(0, user);
-	if(wepn->~IsWeapon() && user)
+	if(!user)
+		return _inherited();
+	if(wepn->~IsWeapon())
 	{
 		
 		if(wepn->~GetFMData(FM_NoCrosshair))

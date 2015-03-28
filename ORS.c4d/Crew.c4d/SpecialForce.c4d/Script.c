@@ -109,6 +109,18 @@ protected func ControlDigSingle() {
   return(_inherited());
 }
 
+protected func ControlDig()
+{
+	if(ReadyToCrawl())
+  		if(GetPlrDownDouble(GetOwner()))
+  		{
+  			SetAction("LayDown");
+  			return 1;
+  		}
+	return _inherited();
+}
+
+
 protected func ControlUpdate(object clonk, int comdir, bool dig, bool throw)
 {
   if (ControlGrenadeAim("ControlUpdate", comdir, dig, throw)) return 1;

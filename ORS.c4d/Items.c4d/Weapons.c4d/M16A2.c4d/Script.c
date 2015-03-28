@@ -21,16 +21,16 @@ return  _inherited();
 
 public func FMData1(int data)
 {
-	if(data == FM_Name)      		return ".223 Remington"; 
+	if(data == FM_Name)			return ".223 Remington"; 
 	if(data == FM_AmmoID)     	return STAM;
 	if(data == FM_AmmoLoad)   	return 30;
 	if(data == FM_AmmoUsage)  	return 3;
 	if(data == FM_Reload)     	return 36*4;
 	if(data == FM_Recharge)   	return 36/2;
 	if(data == FM_Damage)     	return 18;
-	if(data == FM_HeadDamage)		return 150;
-	if(data == FM_Recoil)				return 6;
-	if(data == FM_Spreading)		return PostureValue(3,2,1);
+	if(data == FM_HeadDamage)	return 150;
+	if(data == FM_Recoil)		return 6;
+	if(data == FM_Spreading)	return PostureValue(3,2,1);
 	if(data == FM_Auto)       	return false; // Feursalve
 	if(data == FM_WeaponSound)	return "m16_shot";
 	return Default(data);
@@ -45,8 +45,6 @@ public func BOTData1(int data)
 
 public func Fire1()
 {
-
-	Log("Peng");
 	if(GetUser() && GetUser()->~ReadyToFire())
 	{
 		var user = GetUser();

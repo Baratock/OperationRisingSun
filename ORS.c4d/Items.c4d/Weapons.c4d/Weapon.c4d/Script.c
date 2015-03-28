@@ -429,6 +429,7 @@ private func ChangeFireMode(dummy, i)
     // Fertig.
     return; 
   }
+  
   CloseMenu(GetUser());
   var old = GetFireMode();
   // Schussmodus umstellen
@@ -465,9 +466,44 @@ private func SetFireMode(int i) {
   return 1;
 }
 
+public func ChangeToNextFM()
+{
+	var aFM = [];
+	var i;// we still need the count after checking this
+	
+	//note all Firemodes
+	for(i = 1; GetFMData(FM_Name, i); i++ )
+		if(GetFMData(FM_Condition, i))
+			aFM[i-1] = true;
+	//use the previos as Module for the array		
+	i--;
+	var f = GetFireMode()-1;
+	while(!aFM[f=(++f%i)]);
+	f++;
+	ChangeFireMode(GetUser(), f);
+	return f;	
+}
+
+//WeaponMenu
+public func ControlDigDouble(caller)
+{
+	SetUser(caller);
+	//Check amount of FireModes
+	var j;
+	for(var i = 1; GetFMData(FM_Name, i); i++ )
+		if(GetFMData(FM_Condition, i))
+			j++;
+	//Log("%v", j);
+	var menu = CreateQuickMenu(this, caller);
+	if(j > 1)
+		menu->Add(QMEN_Up, 0, QMBG, "ChangeToNextFM", 0, 0);
+	if(GetAmmoCount())
+		menu->Add(QMEN_Down, 0, QMBG, "Empty", 0, 0);
+	return true;
+}
 
 
-//Waffe entleeren
+//Empty Weapon
 public func Empty()	{ Empty2(GetSlot());	}
 
 public func Empty2(int slot)    // Waffe ausleeren
