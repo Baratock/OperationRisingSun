@@ -6,7 +6,7 @@
 protected func Check() {
 	var user = GetActionTarget();
 	var wepn = Contents(0, user);
-	if(!user)
+	if(!user || !wepn)
 		return _inherited();
 	if(wepn->~IsWeapon())
 	{

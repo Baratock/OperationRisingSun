@@ -49,7 +49,7 @@ public func Hit()
 SetXDir(GetXDir()/3*2);
 }
 
-public func Activate(object pClnk)
+public func ControlDigDouble(object pClnk)
 {
 	if(IsUsed())
 		return 1;
@@ -59,6 +59,7 @@ public func Activate(object pClnk)
 	menu->Add(2, SNB3, 0, "Timer", 3);
 	menu->Add(3, SNB4, 0, "Timer", 4);
 	menu->Add(4, SNB5, 0, "Timer", 5);
+	return true;
 }
 
 protected func Timer(int Time) { iTime=36*Time; }

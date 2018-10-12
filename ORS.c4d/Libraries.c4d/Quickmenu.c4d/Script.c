@@ -117,7 +117,7 @@ protected func OnAdd(int Index, id IconID, id BackgroundID, string szCommand, Pa
 	if(IconID)
 		SetGraphics(0, this, IconID, j, GFXOV_MODE_IngamePicture);
 	if(BackgroundID)
-		SetGraphics(0, this, BackgroundID, i, GFXOV_MODE_IngamePicture);
+		SetGraphics(szBGName, this, BackgroundID, i, GFXOV_MODE_IngamePicture);
 	if(GetAction() == "Opening")
 		Opening();
 	if(GetAction() == "Closing")
@@ -149,7 +149,7 @@ protected func ScaleMenu(int scale)
 		var x = sc*PosX(a);
 		var y = sc*PosY(a);
 		SetObjDrawTransform(sc*s/160,0,x, 0, sc*s/160,y, this, j);
-	
+		
 		w = GetDefCoreVal("Picture", "DefCore", BackgroundID, 2);
 		h = GetDefCoreVal("Picture", "DefCore", BackgroundID, 3);
 		s = Max(h, w);

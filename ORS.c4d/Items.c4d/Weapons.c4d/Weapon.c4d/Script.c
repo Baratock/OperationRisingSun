@@ -498,7 +498,7 @@ public func ControlDigDouble(caller)
 	if(j > 1)
 		menu->Add(QMEN_Up, 0, QMBG, "ChangeToNextFM", 0, 0);
 	if(GetAmmoCount())
-		menu->Add(QMEN_Down, 0, QMBG, "Empty", 0, 0);
+		menu->Add(QMEN_Down, 0, QMBG, "Empty", 0, "Empty");
 	return true;
 }
 

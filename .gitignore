@@ -1,3 +1,6 @@
+# old svn crap
+.svn/
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
