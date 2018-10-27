@@ -1,3 +1,7 @@
+#
+/tmp
+*.c4k
+
 # old svn crap
 .svn/
 
